@@ -2,7 +2,7 @@
 nixPkgs = ["dotnet-sdk_8"]
 
 [phases.install]
-cmds = ["cd backend && dotnet restore --verbosity normal"]
+cmds = ["cd backend && dotnet --version && dotnet restore --verbosity normal"]
 
 [phases.build]
 cmds = ["cd backend && dotnet build -c Release"]
