@@ -220,7 +220,7 @@ public class InMemoryBookRepository : IBookRepository
         // Validate comments don't contain "horrible"
         if (!string.IsNullOrEmpty(book.Comments) && book.Comments.Contains("horrible", StringComparison.OrdinalIgnoreCase))
         {
-            throw new ArgumentException("Comments cannot contain the word 'horrible'");
+            throw new ArgumentException("Book not added! Comments cannot contain the word 'horrible'");
         }
 
         // Validate string length limits

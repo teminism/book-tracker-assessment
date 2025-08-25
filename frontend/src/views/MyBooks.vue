@@ -23,6 +23,7 @@ const editing = ref<Book | null>(null)
 const viewing = ref<Book | null>(null)
 const listViewBtn = ref<HTMLButtonElement>()
 const gridViewBtn = ref<HTMLButtonElement>()
+const addBookModalRef = ref<InstanceType<typeof AddBookModal> | null>(null)
 
 // Load books on mount
 onMounted(async () => {
@@ -98,11 +99,16 @@ async function handleAddSubmit(bookData: { title: string; author: string; isbn?:
     // Refresh the current page
     await store.fetchBooks(store.currentPage, search.value, sortBy.value)
     console.log('🔍 MyBooks: Page refreshed');
-    // Close the modal after successful add
-    addOpen.value = false
-    console.log('🔍 MyBooks: Modal closed');
+    // Reset form and close modal only after successful add
+    addBookModalRef.value?.resetAndClose()
+    console.log('🔍 MyBooks: Modal reset and closed');
   } catch (error) {
     console.error('🔍 MyBooks: Error adding book:', error)
+    // Show user-friendly alert for validation errors
+    const errorMessage = error instanceof Error ? error.message : 'An error occurred while adding the book'
+    alert(errorMessage)
+    // Modal stays open so user can fix the error and try again
+    console.log('🔍 MyBooks: Modal kept open due to validation error')
   }
 }
 
@@ -116,10 +122,15 @@ async function handleEditSubmit(id: string, updates: { rating: number; comments?
     await store.updateBook(id, updates)
     // Refresh the current page to ensure data is in sync
     await store.fetchBooks(store.currentPage, search.value, sortBy.value)
-    // Close the modal after successful update
+    // Close the modal only after successful update
     editOpen.value = false
   } catch (error) {
     console.error('Error updating book:', error)
+    // Show user-friendly alert for validation errors
+    const errorMessage = error instanceof Error ? error.message : 'An error occurred while updating the book'
+    alert(errorMessage)
+    // Modal stays open so user can fix the error and try again
+    console.log('🔍 MyBooks: Edit modal kept open due to validation error')
   }
 }
 
@@ -134,7 +145,10 @@ async function handleDeleteConfirm(id: string) {
     // Refresh the current page
     await store.fetchBooks(store.currentPage, search.value, sortBy.value)
   } catch (error) {
-          console.error('Error deleting book:', error)
+    console.error('Error deleting book:', error)
+    // Show user-friendly alert for errors
+    const errorMessage = error instanceof Error ? error.message : 'An error occurred while deleting the book'
+    alert(errorMessage)
   }
 }
 
@@ -333,7 +347,7 @@ function openView(b: Book) {
     </footer>
 
     <!-- Modal Components -->
-    <AddBookModal :open="addOpen" @close="addOpen=false" @submit="handleAddSubmit" />
+    <AddBookModal ref="addBookModalRef" :open="addOpen" @close="addOpen=false" @submit="handleAddSubmit" />
     <EditBookModal :open="editOpen" :book="editing" @close="editOpen=false" @submit="handleEditSubmit" />
     <DeleteConfirmModal :open="deleteOpen" :book="editing" @close="deleteOpen=false" @confirm="handleDeleteConfirm" />
     <ViewBookModal :open="viewOpen" :book="viewing" @close="viewOpen=false" />

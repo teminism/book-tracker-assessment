@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, watch } from 'vue'
+import { reactive, watch, computed } from 'vue'
 import Modal from './Modal.vue'
 import RatingStars from './RatingStars.vue'
 
@@ -15,8 +15,50 @@ interface Emits {
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
+// Expose method to reset form and close modal
+const resetAndClose = () => {
+  draft.title = ''
+  draft.author = ''
+  draft.rating = 0
+  draft.comments = ''
+  draft.isbn = ''
+  draft.coverUrl = ''
+  // Clear errors
+  errors.title = ''
+  errors.author = ''
+  errors.comments = ''
+  emit('close')
+  console.log('🔍 AddBookModal: Form reset and modal closed');
+}
+
+defineExpose({ resetAndClose })
+
 const draft = reactive<{ title: string; author: string; rating: number; comments: string; isbn: string; coverUrl: string }>({
   title: '', author: '', rating: 0, comments: '', isbn: '', coverUrl: ''
+})
+
+// Validation state
+const errors = reactive({
+  title: '',
+  author: '',
+  comments: ''
+})
+
+// Computed validation
+const isValid = computed(() => {
+  return draft.title.trim() !== '' && 
+         draft.author.trim() !== '' && 
+         !(draft.rating > 0 && (!draft.comments || draft.comments.trim() === ''))
+})
+
+// Validation message
+const validationMessage = computed(() => {
+  if (!draft.title.trim()) return 'Please enter a book title'
+  if (!draft.author.trim()) return 'Please enter an author name'
+  if (draft.rating > 0 && (!draft.comments || draft.comments.trim() === '')) {
+    return 'Please provide comments when giving a rating'
+  }
+  return 'Save this book to your collection'
 })
 
 // Reset form when modal opens
@@ -28,36 +70,48 @@ watch(() => props.open, (isOpen) => {
     draft.comments = ''
     draft.isbn = ''
     draft.coverUrl = ''
+    // Clear errors
+    errors.title = ''
+    errors.author = ''
+    errors.comments = ''
   }
 })
 
 function submit() {
   console.log('🔍 AddBookModal: submit called with draft:', draft);
   
-  if (!draft.title || !draft.author) {
-    console.log('🔍 AddBookModal: Validation failed - missing title or author');
-    return
+  // Clear previous errors
+  errors.title = ''
+  errors.author = ''
+  errors.comments = ''
+  
+  // Validate fields
+  let hasErrors = false
+  
+  if (!draft.title.trim()) {
+    errors.title = 'Book title is required'
+    hasErrors = true
   }
   
-  // Validate that comments are provided if rating is given (rating > 0)
+  if (!draft.author.trim()) {
+    errors.author = 'Author name is required'
+    hasErrors = true
+  }
+  
   if (draft.rating > 0 && (!draft.comments || draft.comments.trim() === '')) {
-    console.log('🔍 AddBookModal: Validation failed - rating given but no comments');
-    alert('Please provide comments when giving a rating')
+    errors.comments = 'Comments are required when giving a rating'
+    hasErrors = true
+  }
+  
+  if (hasErrors) {
+    console.log('🔍 AddBookModal: Validation failed');
     return
   }
   
   console.log('🔍 AddBookModal: Validation passed, emitting submit event');
   emit('submit', { ...draft })
-  
-  // Reset the form after submission
-  draft.title = ''
-  draft.author = ''
-  draft.rating = 0
-  draft.comments = ''
-  draft.isbn = ''
-  draft.coverUrl = ''
-  emit('close')
-  console.log('🔍 AddBookModal: Form reset and modal closed');
+  // Don't reset form or close modal here - let parent handle success/failure
+  console.log('🔍 AddBookModal: Submit event emitted, waiting for parent response');
 }
 </script>
 
@@ -73,10 +127,10 @@ function submit() {
             required 
             aria-required="true"
             aria-describedby="title-error"
-            :aria-invalid="!draft.title && draft.title !== ''"
+            :aria-invalid="!!errors.title"
           />
-          <div v-if="!draft.title && draft.title !== ''" id="title-error" class="error-message" role="alert">
-            Book title is required
+          <div v-if="errors.title" id="title-error" class="error-message" role="alert">
+            {{ errors.title }}
           </div>
         </label>
       </div>
@@ -90,21 +144,21 @@ function submit() {
             required 
             aria-required="true"
             aria-describedby="author-error"
-            :aria-invalid="!draft.author && draft.author !== ''"
+            :aria-invalid="!!errors.author"
           />
-          <div v-if="!draft.author && draft.author !== ''" id="author-error" class="error-message" role="alert">
-            Author name is required
+          <div v-if="errors.author" id="author-error" class="error-message" role="alert">
+            {{ errors.author }}
           </div>
         </label>
       </div>
       
       <div class="form-group">
         <label for="book-isbn">
-          <div>ISBN (optional)</div>
+          <div>ISBN</div>
           <input 
             id="book-isbn"
             v-model="draft.isbn" 
-            placeholder="ISBN (optional)"
+            placeholder="ISBN"
             aria-describedby="isbn-help"
           />
           <div id="isbn-help" class="help-text">International Standard Book Number</div>
@@ -113,12 +167,12 @@ function submit() {
       
       <div class="form-group">
         <label for="book-cover">
-          <div>Cover URL (optional)</div>
+          <div>Cover URL</div>
           <input 
             id="book-cover"
             v-model="draft.coverUrl" 
             type="url"
-            placeholder="Cover image URL (optional)"
+            placeholder="Cover image URL"
             aria-describedby="cover-help"
           />
           <div id="cover-help" class="help-text">Direct link to book cover image</div>
@@ -140,31 +194,34 @@ function submit() {
             v-model="draft.comments" 
             rows="4" 
             placeholder="Your thoughts (optional)"
-            aria-describedby="comments-help"
+            aria-describedby="comments-error"
+            :aria-invalid="!!errors.comments"
           />
-          <div id="comments-help" class="help-text">Optional notes about the book</div>
+          <div v-if="errors.comments" id="comments-error" class="error-message" role="alert">
+            {{ errors.comments }}
+          </div>
         </label>
       </div>
       
       <div class="form-actions" role="group" aria-label="Form actions">
-        <button 
-          type="button" 
-          @click="emit('close')"
-          aria-label="Cancel adding book"
-        >
-          Cancel
-        </button>
-        <button 
-          type="submit"
-          :disabled="!draft.title || !draft.author || (draft.rating > 0 && (!draft.comments || draft.comments.trim() === ''))"
-          aria-describedby="submit-help"
-        >
-          Save Book
-        </button>
-        <div id="submit-help" class="help-text">
-          {{ !draft.title || !draft.author ? 'Please fill in title and author to save' : 
-             (draft.rating > 0 && (!draft.comments || draft.comments.trim() === '')) ? 'Please provide comments when giving a rating' : 
-             'Save this book to your collection' }}
+        <div class="validation-message" :class="{ 'error': !isValid }">
+          {{ validationMessage }}
+        </div>
+        <div class="button-group">
+          <button 
+            type="button" 
+            @click="emit('close')"
+            aria-label="Cancel adding book"
+          >
+            Cancel
+          </button>
+          <button 
+            type="submit"
+            :disabled="!isValid"
+            aria-describedby="submit-help"
+          >
+            Save Book
+          </button>
         </div>
       </div>
     </form>
@@ -223,9 +280,31 @@ input[aria-invalid="true"], textarea[aria-invalid="true"] {
 
 .form-actions { 
   display: flex; 
-  justify-content: end; 
-  gap: 8px; 
+  flex-direction: column;
+  gap: 12px; 
   margin-top: 8px;
+}
+
+.validation-message {
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  text-align: center;
+  padding: 8px;
+  border-radius: 6px;
+  background: var(--color-background-secondary);
+  transition: all 0.2s ease;
+}
+
+.validation-message.error {
+  color: var(--color-danger);
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+.button-group {
+  display: flex;
+  justify-content: end;
+  gap: 8px;
 }
 
 button:disabled {
