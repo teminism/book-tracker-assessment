@@ -4,7 +4,7 @@ A modern book tracking app built with Vue 3 and .NET 8. Keep track of your readi
 
 ## About My Choices
 
-Vue 3 and .NET 8 were specified requirements for this project. I made several key architectural decisions to optimize the development experience and code quality. I chose the Composition API for its superior TypeScript support and better code organization. For the backend, I went with Minimal APIs for their simplicity and performance benefits.
+I made several key architectural decisions to optimise the development experience and code quality. I chose the Composition API for its superior TypeScript support and better code organisation. For the backend, I went with Minimal APIs for their simplicity and performance benefits.
 
 I selected Pinia for state management as it's the official Vue state management solution with excellent TypeScript integration. Vite was my choice for the build tool due to its lightning-fast development server and modern ES modules approach. For testing, I chose xUnit for the backend and Vitest for the frontend, both offering excellent developer experience and comprehensive testing capabilities.
 
