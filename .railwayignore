@@ -1,0 +1,28 @@
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Build artifacts
+backend/bin/
+backend/obj/
+frontend/dist/
+frontend/node_modules/
+
+# Test files
+backend/BackendTests/
+frontend/tests/
+
+# Documentation
+README.md
+VISUAL_IMPROVEMENTS.md

@@ -2,10 +2,10 @@
 nixPkgs = ["dotnet-sdk_8"]
 
 [phases.install]
-cmds = ["cd backend && dotnet restore"]
+cmds = ["cd backend && dotnet restore --verbosity normal"]
 
 [phases.build]
-cmds = ["cd backend && dotnet publish -c Release -o ./publish"]
+cmds = ["cd backend && dotnet build -c Release"]
 
 [start]
-cmd = "cd backend && dotnet run"
+cmd = "cd backend && dotnet run --urls http://0.0.0.0:$PORT"
