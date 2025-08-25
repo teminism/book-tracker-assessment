@@ -16,7 +16,7 @@ export interface Book {
   updatedAt: string
 }
 
-const API_BASE = '/api/books';
+const API_BASE = `${import.meta.env.VITE_API_BASE_URL || '/api'}/books`;
 
 export const useBooksStore = defineStore('books', () => {
   const books = ref<Book[]>([])
