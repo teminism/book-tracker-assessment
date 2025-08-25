@@ -37,7 +37,7 @@ You'll need:
 
 1. **Clone and navigate to the project**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/teminism/book-tracker-assessment.git
    cd book-tracker-assessment
    ```
 
