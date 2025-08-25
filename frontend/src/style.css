@@ -1,0 +1,147 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* Light theme variables */
+  --color-text-primary: #1f2937;
+  --color-text-secondary: #6b7280;
+  --color-text-muted: #9ca3af;
+  --color-background: #ffffff;
+  --color-background-secondary: #f9fafb;
+  --color-background-tertiary: #f3f4f6;
+  --color-border: #e5e7eb;
+  --color-border-secondary: #d1d5db;
+  --color-border-hover: #9ca3af;
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --color-accent: #111827;
+  --color-accent-hover: #374151;
+  --color-danger: #dc2626;
+  --color-danger-bg: #fef2f2;
+  --color-danger-border: #fecaca;
+  
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+}
+
+:root.dark {
+  /* Dark theme variables */
+  --color-text-primary: #f9fafb;
+  --color-text-secondary: #d1d5db;
+  --color-text-muted: #9ca3af;
+  --color-background: #111827;
+  --color-background-secondary: #1f2937;
+  --color-background-tertiary: #374151;
+  --color-border: #374151;
+  --color-border-secondary: #4b5563;
+  --color-border-hover: #6b7280;
+  --color-primary: #60a5fa;
+  --color-primary-hover: #3b82f6;
+  --color-accent: #f3f4f6;
+  --color-accent-hover: #e5e7eb;
+  --color-danger: #f87171;
+  --color-danger-bg: #1f2937;
+  --color-danger-border: #374151;
+}
+
+a { 
+  font-weight: 500; 
+  color: var(--color-primary); 
+  text-decoration: none; 
+}
+a:hover { 
+  color: var(--color-primary-hover); 
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  overflow-x: hidden;
+}
+
+#app { }
+
+/* Global form element styles */
+input, select, textarea {
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background: var(--color-background);
+  border: 1px solid var(--color-border-secondary);
+  border-radius: 8px;
+  padding: 8px 12px;
+  transition: border-color 150ms, box-shadow 150ms;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+input::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* Focus management for accessibility */
+*:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Button styles - more specific to avoid conflicts */
+button:not([class*="action-btn"]):not([class*="grid-action-btn"]):not([class*="view-toggle"] button):not([class*="star"]) {
+  border-radius: 8px;
+  border: 1px solid var(--color-border-secondary);
+  padding: 8px 16px;
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  font-weight: 500;
+  transition: all 120ms;
+  cursor: pointer;
+  min-height: 44px; /* Minimum touch target size for accessibility */
+}
+
+button:not([class*="action-btn"]):not([class*="grid-action-btn"]):not([class*="view-toggle"] button):not([class*="star"]):hover { 
+  background: var(--color-background-secondary); 
+  border-color: var(--color-border-hover); 
+}
+
+button:not([class*="action-btn"]):not([class*="grid-action-btn"]):not([class*="view-toggle"] button):not([class*="star"]):focus-visible { 
+  outline: 2px solid var(--color-primary); 
+  outline-offset: 2px; 
+}
+
+button:not([class*="action-btn"]):not([class*="grid-action-btn"]):not([class*="view-toggle"] button):not([class*="star"]):active { 
+  transform: translateY(1px); 
+}
+
+button.primary {
+  background: var(--color-accent);
+  color: var(--color-background);
+  border-color: var(--color-accent);
+}
+button.primary:hover {
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+}
+
+
