@@ -1,0 +1,24 @@
+{
+  "name": "book-tracker-assessment",
+  "description": "A modern book tracking app built with Vue 3 and .NET 8",
+  "repository": "https://github.com/teminism/book-tracker-assessment",
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/dotnet-buildpack"
+    }
+  ],
+  "env": {
+    "ASPNETCORE_ENVIRONMENT": {
+      "value": "Production"
+    },
+    "ASPNETCORE_URLS": {
+      "value": "http://0.0.0.0:$PORT"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  }
+}

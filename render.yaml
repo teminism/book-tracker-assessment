@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: book-tracker-backend
+    env: dotnet
+    plan: free
+    buildCommand: cd backend && dotnet restore && dotnet publish -c Release -o ./publish
+    startCommand: cd backend && dotnet run --urls http://0.0.0.0:$PORT
+    healthCheckPath: /health
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://0.0.0.0:$PORT
