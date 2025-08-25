@@ -2,6 +2,28 @@
 
 A modern book tracking app built with Vue 3 and .NET 8. Keep track of your reading collection with ratings, notes, and insights.
 
+## About My Choices
+
+Vue 3 and .NET 8 were specified requirements for this project. I made several key architectural decisions to optimize the development experience and code quality. I chose the Composition API for its superior TypeScript support and better code organization. For the backend, I went with Minimal APIs for their simplicity and performance benefits.
+
+I selected Pinia for state management as it's the official Vue state management solution with excellent TypeScript integration. Vite was my choice for the build tool due to its lightning-fast development server and modern ES modules approach. For testing, I chose xUnit for the backend and Vitest for the frontend, both offering excellent developer experience and comprehensive testing capabilities.
+
+The backend uses in-memory storage for simplicity during development. I designed the architecture with dependency injection to make it easy to swap in a real database later. I also implemented comprehensive validation rules and proper error handling to ensure data integrity and good user experience.
+
+## Sample Books
+
+The application comes pre-loaded with 7 sample books to help you get started:
+
+1. **To Kill a Mockingbird** by Harper Lee (5 stars)
+2. **1984** by George Orwell (4 stars) 
+3. **The Great Gatsby** by F. Scott Fitzgerald (3 stars)
+4. **Pride and Prejudice** by Jane Austen (5 stars)
+5. **The Catcher in the Rye** by J.D. Salinger (2 stars)
+6. **Lord of the Flies** by William Golding (4 stars)
+7. **The Hobbit** by J.R.R. Tolkien (unrated)
+
+These books include realistic ratings, comments, and cover images from OpenLibrary. You can edit, delete, or add to this collection as needed.
+
 ## What it does
 
 - Add, edit, and remove books from your collection
