@@ -157,20 +157,32 @@ The published application is ready to deploy.
 
 The project includes comprehensive testing:
 
-- **Backend tests**: 22 tests covering models, validators, services, and repository operations
-- **Frontend tests**: Component tests ensuring UI functionality
-- **Integration tests**: API endpoint testing
+- **Backend tests**: 2 API integration tests covering book retrieval and creation
+- **Frontend tests**: 14 test files with 175 total tests covering components, stores, and utilities
+- **Test coverage**: Component testing, state management, authentication, and UI interactions
 
-To run all tests:
+### Backend Tests
 ```bash
-# Backend tests
-cd backend/BackendTests
-dotnet run
+cd backend
+dotnet test
+```
 
-# Frontend tests
+**Test Files:**
+- `BooksApiTests.cs` - API integration tests for book endpoints
+
+### Frontend Tests
+```bash
 cd frontend
 npm run test
 ```
+
+**Test Files (14 total):**
+- **Components:** `AddBookModal.test.ts`, `EditBookModal.test.ts`, `LoginModal.test.ts`, `Modal.test.ts`, `RatingStars.test.ts`, `Sidebar.test.ts`, `ViewBookModal.test.ts`, `DeleteConfirmModal.test.ts`, `AuthGuard.test.ts`
+- **Stores:** `books.test.ts`, `auth.test.ts`
+- **Services:** `authService.test.ts`
+- **Utilities:** `useTheme.test.ts`, `basic.test.ts`
+
+**Test Results:** 170 passing tests, 5 failing tests (mostly related to mock data structure)
 
 ## 🌐 Live Application
 
