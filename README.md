@@ -2,6 +2,15 @@
 
 A modern book tracking app built with Vue 3 and .NET 8. Keep track of your reading collection with ratings, notes, and insights.
 
+## 🌐 Live Application
+
+**Frontend:** [https://book-tracker-assessment.vercel.app](https://book-tracker-assessment.vercel.app)  
+**Backend API:** [https://book-tracker-assessment.onrender.com](https://book-tracker-assessment.onrender.com)
+
+**Demo Credentials:**
+- Username: `demo` | Password: `demo123`
+- Username: `admin` | Password: `admin123`
+
 ## About My Choices
 
 Vue 3 and .NET 8 were specified requirements for this project. I made several key architectural decisions to optimize the development experience and code quality. I chose the Composition API for its superior TypeScript support and better code organization. For the backend, I went with Minimal APIs for their simplicity and performance benefits.
@@ -48,14 +57,19 @@ These books include realistic ratings, comments, and cover images from OpenLibra
 
 ## Getting Started
 
-### Prerequisites
+### 🚀 Quick Start (Live Demo)
+The application is already deployed and ready to use! Visit the live application at [https://book-tracker-assessment.vercel.app](https://book-tracker-assessment.vercel.app) and use the demo credentials above.
+
+### 🛠️ Local Development
+
+#### Prerequisites
 
 You'll need:
 - **Node.js** 20.19+ or 22.12+
 - **.NET 8 SDK**
 - **Git**
 
-### Setup
+#### Setup
 
 1. **Clone and navigate to the project**
    ```bash
