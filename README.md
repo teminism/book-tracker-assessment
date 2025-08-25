@@ -2,15 +2,6 @@
 
 A modern book tracking app built with Vue 3 and .NET 8. Keep track of your reading collection with ratings, notes, and insights.
 
-## 🌐 Live Application
-
-**Frontend:** [https://book-tracker-assessment.vercel.app](https://book-tracker-assessment.vercel.app)  
-**Backend API:** [https://book-tracker-assessment.onrender.com](https://book-tracker-assessment.onrender.com)
-
-**Demo Credentials:**
-- Username: `demo` | Password: `demo123`
-- Username: `admin` | Password: `admin123`
-
 ## About My Choices
 
 Vue 3 and .NET 8 were specified requirements for this project. I made several key architectural decisions to optimize the development experience and code quality. I chose the Composition API for its superior TypeScript support and better code organization. For the backend, I went with Minimal APIs for their simplicity and performance benefits.
@@ -180,6 +171,15 @@ dotnet run
 cd frontend
 npm run test
 ```
+
+## 🌐 Live Application
+
+**Frontend:** [https://book-tracker-assessment.vercel.app](https://book-tracker-assessment.vercel.app)  
+**Backend API:** [https://book-tracker-assessment.onrender.com](https://book-tracker-assessment.onrender.com)
+
+**Demo Credentials:**
+- Username: `demo` | Password: `demo123`
+- Username: `admin` | Password: `admin123`
 
 ## Project structure
 
