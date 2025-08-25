@@ -1,0 +1,11 @@
+[phases.setup]
+nixPkgs = ["dotnet-sdk_8"]
+
+[phases.install]
+cmds = ["cd backend && dotnet restore"]
+
+[phases.build]
+cmds = ["cd backend && dotnet publish -c Release -o ./publish"]
+
+[start]
+cmd = "cd backend && dotnet run"

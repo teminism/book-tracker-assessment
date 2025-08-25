@@ -7,11 +7,10 @@ WORKDIR /app
 # Copy global.json first to set SDK version
 COPY global.json ./
 
-# Copy project files
+# Copy only the main project file
 COPY backend/backend.csproj ./backend/
-COPY backend/BackendTests/BackendTests.csproj ./backend/BackendTests/
 
-# Restore dependencies
+# Restore dependencies for the main project only
 RUN dotnet restore backend/backend.csproj
 
 # Copy the rest of the source code
