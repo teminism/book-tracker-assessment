@@ -147,7 +147,7 @@ main {
   
   main {
     padding: 24px;
-    margin-left: 240px;
+    margin-left: 270px;
     width: calc(100vw - 240px);
     box-sizing: border-box;
     overflow-x: hidden;
